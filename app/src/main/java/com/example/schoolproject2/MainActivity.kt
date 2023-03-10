@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    NowDisplay()
+                    NowDisplay(1)
                 }
             }
         }
@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun NowDisplay() {
+fun NowDisplay(page: Int) {
 //    val nowPageLink by remember { mutableStateOf(1) }
 //    val nowPage = when(nowPageLink){
 //        1 -> Enter()
@@ -51,6 +51,6 @@ fun NowDisplay() {
 @Composable
 fun DefaultPreview() {
     SchoolProject2Theme {
-        NowDisplay()
+        NowDisplay(1)
     }
 }

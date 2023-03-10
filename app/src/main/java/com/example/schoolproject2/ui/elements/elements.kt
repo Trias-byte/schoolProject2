@@ -28,8 +28,9 @@ import com.example.schoolproject2.R
 
 // Text elements
 @Composable
-fun HeaderText(text: String){ // It's Headers
+fun HeaderText(text: String, modifier: Modifier = Modifier){ // It's Headers
     Text(text = text,
+        modifier = modifier,
         style = MaterialTheme.typography.h1,
         color =  colorResource(R.color.black),
         textAlign = TextAlign.Center,
@@ -38,26 +39,29 @@ fun HeaderText(text: String){ // It's Headers
 
 
 @Composable
-fun ImportantText(text: String){ // It's to highlight some important text
+fun ImportantText(text: String, modifier: Modifier = Modifier){ // It's to highlight some important text
     Text(text = text,
-        style = MaterialTheme.typography.subtitle1,
+        modifier = modifier,
+        style = MaterialTheme.typography.subtitle2,
         color =  colorResource(R.color.important_red),
         textAlign = TextAlign.Left,
         )
 }
 
 @Composable
-fun BoldText(text: String){ // It's to highlight some text
+fun BoldText(text: String, modifier: Modifier = Modifier){ // It's to highlight some text
     Text(text = text,
+        modifier = modifier,
         style = MaterialTheme.typography.subtitle1,
         color = colorResource(R.color.bold_blue),
         textAlign = TextAlign.Left,
         )
 }
 @Composable
-fun NormText(text: String){ // It's text
+fun NormText(text: String, modifier: Modifier = Modifier){ // It's text
     Text(text = text,
-        style = MaterialTheme.typography.subtitle1,
+        modifier = modifier,
+        style = MaterialTheme.typography.body1,
         color =  colorResource(R.color.black),
         textAlign = TextAlign.Left,
         )
@@ -93,7 +97,7 @@ fun TextInput(placeholder: String, descText: String, value: String, funny: (Stri
             backgroundColor = colorResource(id = R.color.white),
             focusedIndicatorColor = colorResource(id = R.color.login_),
             unfocusedIndicatorColor = colorResource(id = R.color.login_black)),
-        textStyle = MaterialTheme.typography.subtitle1,
+        textStyle = MaterialTheme.typography.caption,
         keyboardOptions = KeyboardOptions(keyboardType = type),
         visualTransformation = if (type == KeyboardType.Password) { PasswordVisualTransformation() }
         else { VisualTransformation.None },
@@ -109,7 +113,6 @@ data class FormModel(val name:String, val type: KeyboardType, val image : Int)
 
 @Composable
 fun FormElement(model: FormModel){
-
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement =  Arrangement.Start,
