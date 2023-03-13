@@ -17,6 +17,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.schoolproject2.MainActivity
+import com.example.schoolproject2.page
 
 import com.example.schoolproject2.ui.theme.SchoolProject2Theme
 
@@ -26,7 +28,7 @@ fun Enter(){
         FormModel("login", KeyboardType.Text, R.drawable.person),
         FormModel("password", KeyboardType.Password, R.drawable.password),
     )
-     val margin = 150.dp
+     val margin = 100.dp
     Column(
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -49,7 +51,7 @@ fun Enter(){
             ImportantText(
                 text = stringResource(id = R.string.Reg_page),
                 modifier = Modifier.clickable {
-
+                    page.change(2)
                 }
             )
             Image(

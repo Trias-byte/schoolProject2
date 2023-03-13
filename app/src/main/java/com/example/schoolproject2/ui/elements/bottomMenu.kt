@@ -31,6 +31,7 @@ fun BottomMenu(){
         }
         Row(
             modifier = Modifier
+                .height(110.dp)
                 .fillMaxSize()
                 .background(Color.Transparent),
 
@@ -47,8 +48,6 @@ fun BottomMenu(){
                     }
             )
         }
-
-
     }
 }
 
@@ -85,6 +84,11 @@ fun Menu(){
                     .size(40.dp),
                 painter = painterResource(id = R.drawable.background_ellipse_menu),
                 contentDescription = "background_ellipse"
+            )
+
+            Spacer(
+                modifier = Modifier
+                    .width(10.dp)
             )
 
         }

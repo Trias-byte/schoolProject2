@@ -60,7 +60,6 @@ val Typography = Typography(
         fontFamily = montserrat,
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp,
-        color = Color(0x787878FF)
     ),
 
 )

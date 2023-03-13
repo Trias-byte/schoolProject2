@@ -9,9 +9,16 @@ import androidx.compose.ui.graphics.Color
 import com.example.schoolproject2.R
 
 private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
+//    primary = Purple200,
+//    primaryVariant = Purple700,
+//    secondary = Teal200
+    onSurface = Login_black,
+//    background = Color(R.color.white),
+//    surface = Color(R.color.white),
+//    onPrimary = Color(R.color.white),
+//    onSecondary = Color(R.color.white),
+//    onBackground = Color(R.color.white),
+
 )
 
 private val LightColorPalette = lightColors(
