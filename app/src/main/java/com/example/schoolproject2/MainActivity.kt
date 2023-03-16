@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
 }
 
 class Page (){
-    var page = 1
+    var page = 2
     fun change (page: Int)  {
         this.page = page
     }
@@ -44,7 +44,7 @@ val page = Page()
 @Composable
 fun Main(){
     val ok by remember {
-        mutableStateOf(page.page)
+        mutableStateOf(4)
     }
     Column(
         verticalArrangement = Arrangement.SpaceBetween
@@ -62,13 +62,13 @@ fun NowDisplay(page: Int) {
             Enter()
         }
         2 -> {
-            Registration()
+            RegistrationPart1()
         }
         3 -> {
-            Registration()
+            RegistrationPart2Student()
         }
         4 -> {
-            Registration()
+            RegistrationPart2Teacher()
         }
     }
 }
