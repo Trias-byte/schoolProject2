@@ -1,4 +1,4 @@
-package com.example.schoolproject2.ui.elements
+package com.example.schoolproject2.ui.pages
 
 
 import androidx.compose.foundation.Image
@@ -10,20 +10,23 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.schoolproject2.MainActivity
-import com.example.schoolproject2.page
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.schoolproject2.Screen
+import com.example.schoolproject2.ui.elements.*
 
-import com.example.schoolproject2.ui.theme.SchoolProject2Theme
+
 
 @Composable
-fun Enter(){
+fun Enter(
+    navController: NavController
+){
     val enterFormList: List<FormModel> = listOf(
         FormModel("login", KeyboardType.Text, R.drawable.person),
         FormModel("password", KeyboardType.Password, R.drawable.password),
@@ -51,7 +54,7 @@ fun Enter(){
             ImportantText(
                 text = stringResource(id = R.string.Reg_page),
                 modifier = Modifier.clickable {
-                    page.change(2)
+                    navController.navigate(route = Screen.Reg1.route)
                 }
             )
             Image(
@@ -69,12 +72,11 @@ fun Enter(){
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun EnterPreview__() {
-    SchoolProject2Theme {
-        Enter()
-    }
+@Preview
+fun EnterScreenPreview(){
+    Enter(navController = rememberNavController())
 }
+
 
 

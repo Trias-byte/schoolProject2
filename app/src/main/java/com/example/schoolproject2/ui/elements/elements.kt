@@ -5,16 +5,20 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
 
 import androidx.compose.ui.text.input.KeyboardType
+
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -69,12 +73,9 @@ fun NormText(text: String, modifier: Modifier = Modifier){ // It's text
 private operator fun Boolean.inc() = !this
 
 @Composable
-fun TextInput(placeholder: String, descText: String, value: String, funny: (String) -> Unit,
-              type: KeyboardType = KeyboardType.Text,
-              @SuppressLint("ModifierParameter") modifier: Modifier = Modifier) {
-    var hidePass  by remember { mutableStateOf(true) }
-    var nowType  by remember { mutableStateOf(type) }
-
+fun TextInput(modifier: Modifier = Modifier, placeholder: String, descText: String, value: String, funny: (String) -> Unit,
+              type: KeyboardType = KeyboardType.Text) {
+    if (type != KeyboardType.Password){
     TextField(
         value = value,
         onValueChange = funny,
@@ -88,45 +89,101 @@ fun TextInput(placeholder: String, descText: String, value: String, funny: (Stri
             text = placeholder,
             style = MaterialTheme.typography.caption,
         )},
-        trailingIcon = {
-            if (type == KeyboardType.Password) {
-                val id = if (hidePass){
-                    R.drawable.eye_close
-                } else{
-                    R.drawable.eye
-                }
-                Icon(
-                painter = painterResource(id = id),
-                contentDescription = null,
-                modifier = modifier
-                    .height(18.dp)
-                    .padding(top = 2.dp)
-                    .clickable {
-                        hidePass ++
-                        nowType = if (nowType == KeyboardType.Password){
-                            KeyboardType.Text
-                        } else{
-                            KeyboardType.Password
-                        }
-                    },
-                    )
-            } else { val ti: @Composable (() -> Unit)? = null}},
+
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = colorResource(id = R.color.white),
             focusedIndicatorColor = colorResource(id = R.color.login_),
             unfocusedIndicatorColor = colorResource(id = R.color.login_black)),
         textStyle = MaterialTheme.typography.caption,
-        keyboardOptions = KeyboardOptions(keyboardType = nowType),
-        visualTransformation = if (nowType == KeyboardType.Password) { PasswordVisualTransformation() }
-        else { VisualTransformation.None },
+        keyboardOptions = KeyboardOptions(
+            keyboardType = type,
+            imeAction = ImeAction.Go
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = {
+
+            }
+        ),
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 30.dp)
             .padding(top = 23.dp),
-    )
+    )}
+    else{
+        PasswordInput(placeholder = placeholder,  descText =  descText, modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 30.dp)
+            .padding(top = 23.dp),)
+    }
 }
 
+@Composable
+fun PasswordInput(
+    placeholder: String,
+    descText: String,
+    modifier: Modifier = Modifier){
+    var password by rememberSaveable() {
+        mutableStateOf("")
+    }
+    var hidePass  by remember { mutableStateOf(true) }
 
+    val icon = if(hidePass)
+        painterResource(id = R.drawable.eye_close)
+    else
+        painterResource(id = R.drawable.eye)
+
+    val desc = if(hidePass)
+        "Show password"
+    else
+        "Hide password"
+
+    TextField(
+        modifier = modifier,
+
+        value = password,
+        onValueChange = {
+            password = it
+        },
+
+        placeholder = { Text(
+            text = placeholder,
+            style = MaterialTheme.typography.caption,
+        )},
+
+        label = { Text(
+            text = descText,
+            style = MaterialTheme.typography.caption,
+            color = colorResource(id = R.color.login_black)
+        )},
+
+        colors = TextFieldDefaults.textFieldColors(
+            backgroundColor = colorResource(id = R.color.white),
+            focusedIndicatorColor = colorResource(id = R.color.login_),
+            unfocusedIndicatorColor = colorResource(id = R.color.login_black)),
+
+        textStyle = MaterialTheme.typography.caption,
+
+        trailingIcon = {
+            IconButton(onClick = { hidePass++ }) {
+                Icon(
+                    painter = icon,
+                    contentDescription = desc
+                )
+            }
+        },
+
+        visualTransformation =
+        if(!hidePass)
+            VisualTransformation.None
+        else
+            PasswordVisualTransformation(),
+
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Password,
+            imeAction = ImeAction.Done
+        )
+    )
+}
 data class FormModel(val name:String, val type: KeyboardType, val image : Int)
 
 @Composable
@@ -149,7 +206,9 @@ fun FormElement(model: FormModel){
             alignment = Alignment.Center
 
         )
-        TextInput(placeholder = model.name, descText = model.name,
+        TextInput(
+            placeholder = model.name,
+            descText = model.name,
             value = userInput.value,
             funny = {userInput.value = it},
             type = model.type)

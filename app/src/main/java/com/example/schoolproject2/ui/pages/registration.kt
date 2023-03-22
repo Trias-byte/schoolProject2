@@ -1,4 +1,4 @@
-package com.example.schoolproject2.ui.elements
+package com.example.schoolproject2.ui.pages
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -13,13 +13,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.schoolproject2.R
-import com.example.schoolproject2.page
+import com.example.schoolproject2.Screen
+import com.example.schoolproject2.ui.elements.FormModel
+import com.example.schoolproject2.ui.elements.*
 import com.example.schoolproject2.ui.theme.SchoolProject2Theme
 
 
 @Composable
-fun RegistrationPart1(){
+fun RegistrationPart1(navController: NavController){
     val regFormList: List<FormModel> = listOf(
         FormModel("login", KeyboardType.Text, R.drawable.person),
         FormModel("mail", KeyboardType.Email, R.drawable.mail),
@@ -87,7 +90,7 @@ fun RegistrationPart1(){
             ImportantText(
                 text = stringResource(id = R.string.Enter_page),
                 modifier = Modifier.clickable {
-                    page.change(2)
+                    navController.navigate(route = Screen.Enter.route)
                 }
             )
             Image(
@@ -136,7 +139,6 @@ fun RegistrationPart2Teacher(){
             ImportantText(
                 text = stringResource(id = R.string.Enter_page),
                 modifier = Modifier.clickable {
-                    page.change(2)
                 }
             )
             Image(
@@ -184,7 +186,6 @@ fun RegistrationPart2Student(){
             ImportantText(
                 text = stringResource(id = R.string.Enter_page),
                 modifier = Modifier.clickable {
-                    page.change(2)
                 }
             )
             Image(
