@@ -19,7 +19,7 @@ import com.example.schoolproject2.ui.theme.SchoolProject2Theme
 import com.example.schoolproject2.ui.elements.*
 class MainActivity : ComponentActivity() {
 
-    lateinit var navController: NavHostController
+    private lateinit var navController: NavHostController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
