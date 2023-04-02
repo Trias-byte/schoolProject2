@@ -41,7 +41,7 @@ val Typography = Typography(
     h1 = TextStyle( // it's a header text
         fontFamily = montserrat,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 24.sp,
+        fontSize = 25.sp,
     ),
 
     subtitle1 = TextStyle( // it's bold text

@@ -46,7 +46,7 @@ fun ImportantText(text: String, modifier: Modifier = Modifier){ // It's to highl
         style = MaterialTheme.typography.subtitle2,
         color =  colorResource(R.color.important_red),
         textAlign = TextAlign.Left,
-        )
+    )
 }
 
 @Composable
@@ -73,44 +73,65 @@ fun NormText(text: String, modifier: Modifier = Modifier){ // It's text
 private operator fun Boolean.inc() = !this
 
 @Composable
-fun TextInput(modifier: Modifier = Modifier, placeholder: String, descText: String, value: String, funny: (String) -> Unit,
-              type: KeyboardType = KeyboardType.Text) {
+fun TextInput(
+    modifier: Modifier = Modifier,
+    placeholder: String,
+    FieldIcon: Int,
+    value: String,
+    funny: (String) -> Unit,
+    type: KeyboardType = KeyboardType.Text
+) {
     if (type != KeyboardType.Password){
     TextField(
         value = value,
+
         onValueChange = funny,
+
         maxLines = 1,
+
         label = { Text(
-            text = descText,
+            text = placeholder,
             style = MaterialTheme.typography.caption,
             color = colorResource(id = R.color.login_black)
         )},
+
         placeholder = { Text(
             text = placeholder,
             style = MaterialTheme.typography.caption,
         )},
 
+        leadingIcon = {
+            Icon(
+                painter = painterResource(id = FieldIcon),
+                contentDescription = placeholder
+            )
+        },
+
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = colorResource(id = R.color.white),
             focusedIndicatorColor = colorResource(id = R.color.login_),
             unfocusedIndicatorColor = colorResource(id = R.color.login_black)),
+
         textStyle = MaterialTheme.typography.caption,
+
         keyboardOptions = KeyboardOptions(
             keyboardType = type,
             imeAction = ImeAction.Go
         ),
+
         keyboardActions = KeyboardActions(
             onDone = {
 
             }
         ),
+
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 30.dp)
             .padding(top = 23.dp),
     )}
     else{
-        PasswordInput(placeholder = placeholder,  descText =  descText, modifier = modifier
+        PasswordInput(placeholder = placeholder, value = value, funny = funny, FieldIcon = FieldIcon, modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 30.dp)
             .padding(top = 23.dp),)
@@ -119,12 +140,13 @@ fun TextInput(modifier: Modifier = Modifier, placeholder: String, descText: Stri
 
 @Composable
 fun PasswordInput(
+    modifier: Modifier = Modifier,
     placeholder: String,
-    descText: String,
-    modifier: Modifier = Modifier){
-    var password by rememberSaveable() {
-        mutableStateOf("")
-    }
+    FieldIcon: Int,
+    value: String,
+    funny: (String) -> Unit
+){
+
     var hidePass  by remember { mutableStateOf(true) }
 
     val icon = if(hidePass)
@@ -140,10 +162,8 @@ fun PasswordInput(
     TextField(
         modifier = modifier,
 
-        value = password,
-        onValueChange = {
-            password = it
-        },
+        value = value,
+        onValueChange = funny,
 
         placeholder = { Text(
             text = placeholder,
@@ -151,7 +171,7 @@ fun PasswordInput(
         )},
 
         label = { Text(
-            text = descText,
+            text = placeholder,
             style = MaterialTheme.typography.caption,
             color = colorResource(id = R.color.login_black)
         )},
@@ -163,6 +183,12 @@ fun PasswordInput(
 
         textStyle = MaterialTheme.typography.caption,
 
+        leadingIcon = {
+            Icon(
+                painter = painterResource(id = FieldIcon),
+                contentDescription = placeholder
+            )
+        },
         trailingIcon = {
             IconButton(onClick = { hidePass++ }) {
                 Icon(
@@ -208,9 +234,10 @@ fun FormElement(model: FormModel){
         )
         TextInput(
             placeholder = model.name,
-            descText = model.name,
             value = userInput.value,
             funny = {userInput.value = it},
-            type = model.type)
+            type = model.type,
+            FieldIcon = model.image
+        )
     }
 }
